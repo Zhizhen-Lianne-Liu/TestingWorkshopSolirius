@@ -120,3 +120,8 @@ And ('I should see the correct submitted answers irregular') do
     expect(page).to have_css('dd.govuk-summary-list__value', text: '8 August 2023')
     expect(page).to have_css('dd.govuk-summary-list__value', text: '3.0')
 end
+
+And ('I select nothing and click continue I get error') do
+    click_button('Continue')
+    expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
+end
