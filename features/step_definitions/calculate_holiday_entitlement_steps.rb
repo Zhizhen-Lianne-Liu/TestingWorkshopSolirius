@@ -115,3 +115,32 @@ And ('I expect error') do
     expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
 end
 
+And ('I enter employment enddate earlier than startdate') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '2022')
+    click_button('Continue')
+end
+
+And ('I enter when the leave year starts with year negative') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '-1')
+    click_button('Continue')
+    
+end
+
+And ('I enter when the leave year starts with year large') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '30000')
+    click_button('Continue')
+    
+end
+
+And ('I enter when the leave year starts with month negative') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '-1')
+    fill_in('Year', with: '1')
+    click_button('Continue')
+end
