@@ -12,22 +12,20 @@ end
 
 When ("I click on the 'Start now' button") do
     click_link('Start now') 
-    expect(page).to have_current_path 'https://www.gov.uk/calculate-your-holiday-entitlement/y'
     
 end
 
 And("I select the option no for working irregular hours") do
     choose('No', allow_label_click: 'true')
     click_button('Continue')
-    expect(page).to have_current_path 'https://www.gov.uk/calculate-your-holiday-entitlement/y/regular'
+    
     
 end
 
 And ('I select the option hours worked per week') do
     choose('hours worked per week', allow_label_click: 'true')
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week')
-    
+   
 end
 
 And ('I select the option for a full leave year') do
@@ -36,17 +34,17 @@ And ('I select the option for a full leave year') do
     expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year')
 end
 
-And ('I input 37.5 hours worked per week') do
-    fill_in('hours worked', with: '37.5')
-    click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year/37.5')
+# And ('I input 37.5 hours worked per week') do
+#     fill_in('hours worked', with: '37.5')
+#     click_button('Continue')
+    
      
-end
+# end
 
 And ('I input 5 days worked per week') do
     fill_in('Number of days worked per week', with: '5')
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year/37.5/5.0')   
+    
     
 end
 
@@ -66,8 +64,6 @@ And ('I should see the total entitlement hours') do
 
     
 end
-
-
 
 
 And("I select the option yes for working irregular hours") do

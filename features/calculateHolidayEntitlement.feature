@@ -34,3 +34,18 @@ Scenario: Displays the values that were inputted by the user on the summary page
 Scenario: Displays error when the user does not select a mandatory field
 
 Scenario: Updates calculation when value is edited
+Given I navigate to the homepage
+    And I should see the homepage
+    When I click on the 'Start now' button
+    And I select the option no for working irregular hours
+    And I select the option hours worked per week
+    And I select the option for a full leave year
+    And I input 35.5 hours worked per week
+    And I input 5 days worked per week
+    And I should see the total entitlement hours 198.8
+    When I select option for change hours worked per week 
+    And I input 40 hours worked per week
+    And I input 5 days worked per week
+    Then I should see the total entitlement hours 224.0
+    
+ 
