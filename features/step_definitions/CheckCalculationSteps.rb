@@ -15,7 +15,8 @@ When('I select option for change hours worked per week') do
   all(:link, 'Change')[3].click
 end
 
-
-
+When('I select option for change employee irregular hours') do
+  all(:link, 'Change')[0].click
+end
 
 
