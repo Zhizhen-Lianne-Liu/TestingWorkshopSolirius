@@ -106,12 +106,31 @@ And ('I should see the correct submitted answers irregular') do
     expect(page).to have_css('dd.govuk-summary-list__value', text: '3.0')
 end
 
+
 And ('I select nothing and click continue I get error') do
     click_button('Continue')
     expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
 end
 
-And ('I expect error') do
-    expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
+
+
+When('I input 1000 into each date box') do
+    fill_in 'response-0', with: '1000'  
+    fill_in 'response-1', with: '1000'  
+    fill_in 'response-2', with: '1000'  
+    click_button('Continue')
+
+    
+  end
+Then('I expect error') do
+expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
+end
+
+Then('I press start again') do
+    click_link('Start again')
+  end
+  
+Then('I should see Calculate Holiday Entitlement page') do
+    expect(page).to have_title 'Calculate holiday entitlement - GOV.UK'
 end
 
