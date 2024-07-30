@@ -29,7 +29,8 @@ And('I input {float} hours worked per week') do |float|
     expect(page).to have_content('The statutory entitlement is ' + num.to_s + ' hours holiday.')
 end
 
-
-
+When('I select option for change employee irregular hours') do
+  all(:link, 'Change')[0].click
+end
 
 

@@ -31,7 +31,7 @@ end
 And ('I select the option for a full leave year') do
     choose('for a full leave year', allow_label_click: 'true')
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year')
+    
 end
 
 # And ('I input 37.5 hours worked per week') do

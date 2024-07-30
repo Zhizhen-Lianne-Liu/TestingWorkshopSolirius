@@ -33,7 +33,7 @@ Scenario: Displays the values that were inputted by the user on the summary page
 
 Scenario: Displays error when the user does not select a mandatory field
 
-Scenario: Updates calculation when value is edited
+Scenario: Updates calculation when hours worked per week is edited
     Given I navigate to the homepage
     And I should see the homepage
     When I click on the 'Start now' button
@@ -48,7 +48,7 @@ Scenario: Updates calculation when value is edited
     And I input 5 days worked per week
     Then I should see the total entitlement hours 224.0
     
- Scenario: unacceptable inputs in DOB form 
+ Scenario: unacceptable inputs in Date form 
     Given I navigate to the homepage
     And I should see the homepage
     When I click on the 'Start now' button
@@ -68,3 +68,21 @@ Scenario: Does start again button work
     And I input 5 days worked per week
     Then I press start again 
     Then I should see Calculate Holiday Entitlement page 
+
+Scenario: Updates calculation when work hours changed to irregular
+    Given I navigate to the homepage
+    And I should see the homepage
+    When I click on the 'Start now' button
+    And I select the option no for working irregular hours
+    And I select the option hours worked per week
+    And I select the option for a full leave year
+    And I input 35.5 hours worked per week
+    And I input 5 days worked per week
+    When I select option for change employee irregular hours
+    And I select the option yes for working irregular hours
+    And I enter employment end date
+    And I select the option hours worked per week
+    And I select the option for a full leave year
+    And I input 3.5 hours worked per week
+    And I input 5 days worked per week
+    Then I should see the total entitlement hours irregular 19.6
