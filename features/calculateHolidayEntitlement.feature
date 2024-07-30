@@ -17,6 +17,17 @@ Scenario: Calculate the correct holiday entitlement for an employee who works re
     And I should see the total entitlement hours
 
 Scenario: Calculate the correct holiday entitlement for an employee who works irregular hours
+    Given I navigate to the homepage
+    And I should see the homepage
+    When I click on the 'Start now' button
+    And I select the option yes for working irregular hours
+    And I enter when the leave year starts
+    And I select the option days worked per week
+    And I select for someone leaving part way through a leave year
+    And I enter employment end date
+    And I enter 3 days worked per week
+    Then I should see the total entitlement hours irregular
+    And I should see the correct submitted answers irregular
 
 Scenario: Displays the values that were inputted by the user on the summary page
 
