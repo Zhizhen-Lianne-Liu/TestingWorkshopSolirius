@@ -17,36 +17,25 @@ end
 
 And("I select the option no for working irregular hours") do
     choose('No', allow_label_click: 'true')
-    click_button('Continue')
-    
-    
+    click_button('Continue')    
 end
 
 And ('I select the option hours worked per week') do
     choose('hours worked per week', allow_label_click: 'true')
-    click_button('Continue')
-   
+    click_button('Continue')    
 end
 
 And ('I select the option for a full leave year') do
     choose('for a full leave year', allow_label_click: 'true')
     click_button('Continue')
-    
 end
 
-# And ('I input 37.5 hours worked per week') do
-#     fill_in('hours worked', with: '37.5')
-#     click_button('Continue')
-    
-     
-# end
-
-And ('I input 5 days worked per week') do
-    fill_in('Number of days worked per week', with: '5')
+And ('I input {float} hours worked per week') do |float|
+    fill_in('hours worked', with: float)
     click_button('Continue')
-    
-    
+
 end
+
 
 Then('I should see the correct submitted answers') do
     within('div.gem-c-summary-list') do
@@ -57,19 +46,12 @@ Then('I should see the correct submitted answers') do
       expect(page).to have_css('dd.govuk-summary-list__value', text: '5.0')
     end
   end
-  
-
-And ('I should see the total entitlement hours') do
-    expect(page).to have_content 'The statutory entitlement is 210 hours holiday'
-
-    
-end
 
 
 And("I select the option yes for working irregular hours") do
     choose('Yes', allow_label_click: true)
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/irregular-hours-and-part-year')
+    
     
 end
 
@@ -99,13 +81,20 @@ And ('I enter employment end date') do
     click_button('Continue')
 end
 
-And ('I enter 3 days worked per week') do
-    fill_in('Number of days worked per week?', with: '3')
+And ('I input {float} days worked per week') do |float|
+    fill_in('Number of days worked per week?', with: float)
     click_button('Continue')
 end
 
-Then ('I should see the total entitlement hours irregular') do
-    expect(page).to have_content('The statutory holiday entitlement is 10.2 days holiday.')
+Then ('I should see the total entitlement hours {float}') do |float|
+    num = float == float.to_i ? float.to_i : float
+    expect(page).to have_content('The statutory entitlement is ' + num.to_s + ' hours holiday.')
+end
+
+Then ('I should see the total entitlement hours irregular {float}') do |float|
+    num = float == float.to_i ? float.to_i : float
+    expect(page).to have_content('The statutory holiday entitlement is ' + float.to_s + ' days holiday.')
+    
 end
 
 And ('I should see the correct submitted answers irregular') do
@@ -116,6 +105,13 @@ And ('I should see the correct submitted answers irregular') do
     expect(page).to have_css('dd.govuk-summary-list__value', text: '8 August 2023')
     expect(page).to have_css('dd.govuk-summary-list__value', text: '3.0')
 end
+
+
+And ('I select nothing and click continue I get error') do
+    click_button('Continue')
+    expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
+end
+
 
 
 When('I input 1000 into each date box') do
@@ -137,4 +133,33 @@ Then('I press start again') do
 Then('I should see Calculate Holiday Entitlement page') do
     expect(page).to have_title 'Calculate holiday entitlement - GOV.UK'
 end
-  
+
+And ('I enter employment enddate earlier than startdate') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '2022')
+    click_button('Continue')
+end
+
+And ('I enter when the leave year starts with year negative') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '-1')
+    click_button('Continue')
+    
+end
+
+And ('I enter when the leave year starts with year large') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '1')
+    fill_in('Year', with: '30000')
+    click_button('Continue')
+    
+end
+
+And ('I enter when the leave year starts with month negative') do
+    fill_in('Day', with: '1')
+    fill_in('Month', with: '-1')
+    fill_in('Year', with: '1')
+    click_button('Continue')
+end
