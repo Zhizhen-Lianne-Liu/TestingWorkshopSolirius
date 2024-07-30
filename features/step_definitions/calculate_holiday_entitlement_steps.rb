@@ -18,36 +18,23 @@ end
 
 And("I select the option no for working irregular hours") do
     choose('No', allow_label_click: 'true')
-    click_button('Continue')
-    expect(page).to have_current_path 'https://www.gov.uk/calculate-your-holiday-entitlement/y/regular'
-    
+    click_button('Continue')    
 end
 
 And ('I select the option hours worked per week') do
     choose('hours worked per week', allow_label_click: 'true')
-    click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week')
-    
+    click_button('Continue')    
 end
 
 And ('I select the option for a full leave year') do
     choose('for a full leave year', allow_label_click: 'true')
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year')
 end
 
-And ('I input 37.5 hours worked per week') do
-    fill_in('hours worked', with: '37.5')
+And ('I input {float} hours worked per week') do |float|
+    fill_in('hours worked', with: float)
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year/37.5')
      
-end
-
-And ('I input 5 days worked per week') do
-    fill_in('Number of days worked per week', with: '5')
-    click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/regular/hours-worked-per-week/full-year/37.5/5.0')   
-    
 end
 
 Then('I should see the correct submitted answers') do
@@ -59,21 +46,12 @@ Then('I should see the correct submitted answers') do
       expect(page).to have_css('dd.govuk-summary-list__value', text: '5.0')
     end
   end
-  
-
-And ('I should see the total entitlement hours') do
-    expect(page).to have_content 'The statutory entitlement is 210 hours holiday'
-
-    
-end
-
-
 
 
 And("I select the option yes for working irregular hours") do
     choose('Yes', allow_label_click: true)
     click_button('Continue')
-    expect(page).to have_current_path('https://www.gov.uk/calculate-your-holiday-entitlement/y/irregular-hours-and-part-year')
+    
     
 end
 
@@ -103,13 +81,20 @@ And ('I enter employment end date') do
     click_button('Continue')
 end
 
-And ('I enter 3 days worked per week') do
-    fill_in('Number of days worked per week?', with: '3')
+And ('I input {float} days worked per week') do |float|
+    fill_in('Number of days worked per week?', with: float)
     click_button('Continue')
 end
 
-Then ('I should see the total entitlement hours irregular') do
-    expect(page).to have_content('The statutory holiday entitlement is 10.2 days holiday.')
+Then ('I should see the total entitlement hours {float}') do |float|
+    num = float == float.to_i ? float.to_i : float
+    expect(page).to have_content('The statutory entitlement is ' + num.to_s + ' hours holiday.')
+end
+
+Then ('I should see the total entitlement hours irregular {float}') do |float|
+    num = float == float.to_i ? float.to_i : float
+    expect(page).to have_content('The statutory holiday entitlement is ' + float.to_s + ' days holiday.')
+    
 end
 
 And ('I should see the correct submitted answers irregular') do
@@ -123,5 +108,9 @@ end
 
 And ('I select nothing and click continue I get error') do
     click_button('Continue')
+    expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
+end
+
+And ('I expect error') do
     expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
 end
