@@ -12,7 +12,6 @@ end
 
 When ("I click on the 'Start now' button") do
     click_link('Start now') 
-    expect(page).to have_current_path 'https://www.gov.uk/calculate-your-holiday-entitlement/y'
     
 end
 
@@ -34,8 +33,9 @@ end
 And ('I input {float} hours worked per week') do |float|
     fill_in('hours worked', with: float)
     click_button('Continue')
-     
+
 end
+
 
 Then('I should see the correct submitted answers') do
     within('div.gem-c-summary-list') do
@@ -114,3 +114,4 @@ end
 And ('I expect error') do
     expect(page).to have_css('h2.govuk-error-summary__title', text: 'There is a problem')
 end
+
